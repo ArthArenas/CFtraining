@@ -12,18 +12,7 @@ let app = express();
 app.use(express.static('public'));
 app.use(morgan('combined'));
 
-let names = [
-    {
-        name : "ravioli",
-        id : 1234567
-    }, 
-    {
-        name: "ravioli2",
-        id : 898989,
-    }];
-
 mongoose.Promise = global.Promise;
-console.log(cat());
 
 app.get("/api/students", function(req, res, next){
     studentList.get()
@@ -35,9 +24,6 @@ app.get("/api/students", function(req, res, next){
             res.statusMessage="something went wrong, internal error?";
             return res.status(400).json({status: 400, message : "something went wrong lmao"});
         });
-    //  return res.status(200).json(names);
-//    res.statusMessage="something went wrong, umma delicia";
-//    return res.status(400).json({message: "something went wrong", status : 400});
 });
 
 app.post("/api/postStudent", jsonParser, (req, res) => {
@@ -62,20 +48,6 @@ app.post("/api/postStudent", jsonParser, (req, res) => {
         .catch(err => {
             console.log(err);
         });
-/*
-    if(!req.body.name || !req.body.id){
-        res.statusMessage = "Missing field in body";
-        return res.status(406).json({message : "missing field in bodyy", status : 406});
-    }
-    names.forEach((obj) => {
-        if(obj.id == req.body.id){
-            res.statusMessage = 'Repeated identifier';
-            return res.status(409).json({message :'Repeated identifier', status : 409});
-        }
-    });
-    names.push(req.body);
-    return res.status(201).json({message : req.body , status: 201});
-    */
 });
 
 
@@ -84,14 +56,6 @@ app.get('/api/getStudentById', (req, res) => {
         res.statusMessage = 'Missing id in param';
         return res.status(406).json({message: 'Missing id in param', status : 406});
     }
-
-//    names.forEach((obj) => {
-//            if(obj.id == req.query.id){
- //               return res.status(202).json({message : obj, status: 202});
-  //          }
-   // });
-    //
-
     let obj = {
         "id" : req.query.id
     };
