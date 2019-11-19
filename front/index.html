@@ -6,25 +6,268 @@
         </title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" type="text/css" href="./style/style.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     </head>
     <body>
         <header>
-            <h1>
+            <h1 class="text-center">
                 CFtraining
             </h1>
         </header>
-        <nav>
-            <ul id="menu">
-                <li id="comparatorSection">
-
-                </li>
-                <li id="statsSection">
-                    
-                </li>
-                <li id="gymSection">
-                    
-                </li>
-            </ul>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><button class="btn btn-primary navbar-btn">Compare</a></li>
+                    <li><button class="btn btn-primary navbar-btn">Stats</a></li>
+                    <li><button class="btn btn-primary navbar-btn">Gym</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><button class="btn btn-danger navbar-btn">Log Out</a></li>
+                </ul>
+            </div>
         </nav>
+        <main>
+            <section id="comparatorSection">
+
+            </section>
+            <section id="statsSection">
+            <div class="container">
+                <h1>Username</h1>
+                <h4>Name: Full Name</h2>
+                <h4>University: ITESM Campus Monterrey</h2>
+                <h4>Country: Mexico</h2>
+                <h4>Contest Rating: 3500 (Legendary Grandmaster)</h3>
+                <h1>Friends</h1>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>Add a friend: </label>
+                        <input type="text" class="form-control"/>
+                        <button class="btn btn-success">Add</button>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend1</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend2</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend3</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend4</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend5</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend6</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend7</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend8</label>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+                <h1>Stats</h1>
+                <div id="chart_div"></div>
+                <script src="./js/stats_charts.js"></script>
+            </div>
+            </section>
+            <section id="gymSection">
+                <div id="leftSide">
+                    <p>Choose the parameters of your customized contest. Note that you cannot choose more than thirteen problems for a contest.</p>
+                    <form>
+                        <label>Rating Range</label>
+                        <div class="form-group">
+                            <label>Min: </label>
+                            <input type="number" class="form-control"/>
+                        </div>
+                        <div class="form-group"></div>
+                            <label>Max: </label>
+                            <input type="number" class="form-control"/>
+                        </div>
+                        <label>Tags</label>
+                        <ul>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>implementation</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>dp</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>math</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>greedy</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>brute force</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>data structures</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>constructive algorithms</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>dfs and similar</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>sortings</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>binary search</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>graphs</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>trees</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>strings</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>number theory</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>geometry</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>combinatorics</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>two pointers</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>dsu</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>bitmasks</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>probabilities</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>shortest paths</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>hashing</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>divide and conquer</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>games</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>matrices</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>flows</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>string suffix structures</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>expression parsing</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>graph matchings</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>ternary search</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>meet-in-the-middle</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>fft</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>2-sat</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>chinese reminder theorem</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input"/>
+                                <label>schedules</label>
+                            </div>
+                        </ul>
+                        <label>Size of Problem-set</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                        </select>
+                    </form>
+                </div>
+                <div id="rightSide">
+                    Rest
+                </div>
+            </section>
+        </main>
     </body>
 </html>
