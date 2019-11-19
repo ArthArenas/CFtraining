@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ArthArenas/CFtraining#readme",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "cat-me": "^1.0.3",
     "express": "^4.17.1",

@@ -9,7 +9,7 @@ const {DATABASE_URL, PORT} = require('./config.js');
 let jsonParser = bodyParser.json();
 
 let app = express();
-app.use(express.static('public'));
+app.use(express.static('./../front'));
 app.use(morgan('combined'));
 
 mongoose.Promise = global.Promise;
