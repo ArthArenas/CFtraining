@@ -1,39 +1,77 @@
-google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawLogScales);
+google.charts.load('current', {'packages':['line', 'corechart']});
+google.charts.setOnLoadCallback(drawChart);
 
-function drawLogScales() {
+function queryRatings() {
+    return fetch("../fake_json/ratings.json")
+    .then(res => res.json())
+    .then(res => {
+        var ans = [res.result[0].handle];
+        res.forEach(userRatings => {
+            ans.push({
+                time: userRatings.result.ratingUpdateTimeSeconds,
+                rating: userRatings.result.newRating
+            })
+        });
+        return ans;
+    })
+}
+
+function drawChart(friends, data) {
+    var chartDiv = document.getElementById('compare_chart_div');
+
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'X');
-    data.addColumn('number', 'Dogs');
-    data.addColumn('number', 'Cats');
+    data.addColumn('date', 'Day');
+    friends.forEach(friend => {
+        data.addColumn('number', friend);
+    });
+
+    for (let idx = 0; idx < array.length; idx++) {
+        const element = array[idx];
+        
+    }
 
     data.addRows([
-        [0, 0, 0],    [1, 10, 5],   [2, 23, 15],  [3, 17, 9],   [4, 18, 10],  [5, 9, 5],
-        [6, 11, 3],   [7, 27, 19],  [8, 33, 25],  [9, 40, 32],  [10, 32, 24], [11, 35, 27],
-        [12, 30, 22], [13, 40, 32], [14, 42, 34], [15, 47, 39], [16, 44, 36], [17, 48, 40],
-        [18, 52, 44], [19, 54, 46], [20, 42, 34], [21, 55, 47], [22, 56, 48], [23, 57, 49],
-        [24, 60, 52], [25, 50, 42], [26, 52, 44], [27, 51, 43], [28, 49, 41], [29, 53, 45],
-        [30, 55, 47], [31, 60, 52], [32, 61, 53], [33, 59, 51], [34, 62, 54], [35, 65, 57],
-        [36, 62, 54], [37, 58, 50], [38, 55, 47], [39, 61, 53], [40, 64, 56], [41, 65, 57],
-        [42, 63, 55], [43, 66, 58], [44, 67, 59], [45, 69, 61], [46, 69, 61], [47, 70, 62],
-        [48, 72, 64], [49, 68, 60], [50, 66, 58], [51, 65, 57], [52, 67, 59], [53, 70, 62],
-        [54, 71, 63], [55, 72, 64], [56, 73, 65], [57, 75, 67], [58, 70, 62], [59, 68, 60],
-        [60, 64, 56], [61, 60, 52], [62, 65, 57], [63, 67, 59], [64, 68, 60], [65, 69, 61],
-        [66, 70, 62], [67, 72, 64], [68, 75, 67], [69, 80, 72]
+    [new Date(2014, 0),  -.5,  5.7],
+    [new Date(2014, 1),   .4,  8.7],
+    [new Date(2014, 2),   .5,   12],
+    [new Date(2014, 3),  2.9, 15.3],
+    [new Date(2014, 4),  6.3, 18.6],
+    [new Date(2014, 5),    9, 20.9],
+    [new Date(2014, 6), 10.6, 19.8],
+    [new Date(2014, 7), 10.3, 16.6],
+    [new Date(2014, 8),  7.4, 13.3],
+    [new Date(2014, 9),  4.4,  9.9],
+    [new Date(2014, 10), 1.1,  6.6],
+    [new Date(2014, 11), -.2,  4.5]
     ]);
 
-    var options = {
-        hAxis: {
-        title: 'Time',
-        logScale: true
-        },
-        vAxis: {
-        title: 'Popularity',
-        logScale: false
-        },
-        colors: ['#a52714', '#097138']
+    var materialOptions = {
+    chart: {
+        title: 'Average Temperatures and Daylight in Iceland Throughout the Year'
+    },
+    width: 900,
+    height: 500,
+    series: {
+        // Gives each series an axis name that matches the Y-axis below.
+        0: {axis: 'Temps'},
+        1: {axis: 'Daylight'}
+    },
+    axes: {
+        // Adds labels to each axis; they don't have to match the axis names.
+        y: {
+        Temps: {label: 'Temps (Celsius)'},
+        Daylight: {label: 'Daylight'}
+        }
+    }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
+    function drawMaterialChart() {
+    var materialChart = new google.charts.Line(chartDiv);
+    materialChart.draw(data, materialOptions);
+    button.innerText = 'Change to Classic';
+    button.onclick = drawClassicChart;
+    }
+
+    drawMaterialChart();
+
 }
