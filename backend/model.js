@@ -3,17 +3,47 @@ let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 
-let studentSchema = mongoose.Schema({
-    firstName : {type : String },
-    lastName : {type : String },
-    id : {
-          type : Number, 
-          required : true },
+let usrSchema = mongoose.Schema({
+    usr : {type : String, required : true},
+    pass : {type : String, required : true},
 });
 
 
-let Student = mongoose.model( 'student', studentSchema);
 
+
+let usuarios = mongoose.model( 'user', usrSchema);
+
+
+
+let user = {
+    existUsr : function(userName){
+        return usuarios.find({usr : userName})
+                .then(user => {
+                    return user.length > 0;
+                })
+                .catch(err => {
+                    throw err;
+                });
+    },
+    register : function(obj){
+        return usuarios.create(obj)
+                .then(elem => {
+                    return elem;
+                })
+                .catch( err => {
+                    throw err;
+                });
+    },
+    getPass : function(userName){
+        return usuarios.findOne({usr : userName})
+                .then(user => {
+                    return user.pass;
+                })
+                .catch(err => {
+                    throw err;
+                });
+    }
+}
 
 
 let studentList = {
@@ -50,4 +80,4 @@ let studentList = {
     }
 }
 
-module.exports = { studentList };
+module.exports = { user };

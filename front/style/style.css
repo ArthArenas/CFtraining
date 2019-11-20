@@ -13,10 +13,13 @@ form {
     margin: 20px 0px;
 }
 
+#usrError{
+    display: none;
+}
+
 .btn {
     margin: 5px 5px;
     font-size: 15px;
-    font-weight: bold;
 }
 
 #statsSection {
