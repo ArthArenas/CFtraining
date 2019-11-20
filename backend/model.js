@@ -3,51 +3,101 @@ let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 
-let studentSchema = mongoose.Schema({
-    firstName : {type : String },
-    lastName : {type : String },
-    id : {
-          type : Number, 
-          required : true },
+let usrSchema = mongoose.Schema({
+    usr : {type : String, required : true},
+    pass : {type : String, required : true},
 });
 
 
-let Student = mongoose.model( 'student', studentSchema);
+let contestSchema = mongoose.Schema({
+    id : {
+        type : String,
+        required : true
+    },
+    user : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'usrSchema',
+        required : true
+    },
+    problemName : {
+        type: String,
+        required : true
+    },
+    dificulty : {
+        type : Number,
+        required : true
+    },
+    tag : {
+        type: [String],
+        required : true
+    }
+
+});
+
+let usuarios = mongoose.model( 'user', usrSchema);
+let contests = mongoose.model( 'contests', contestSchema);
 
 
 
-let studentList = {
-    get : function(){
-        return Student.find()
-                .then(list => {
-                    return list;
+let user = {
+    existUsr : function(userName){
+        return usuarios.find({usr : userName})
+                .then(user => {
+                    return user.length > 0;
                 })
                 .catch(err => {
-                    console.log(err);
                     throw err;
                 });
     },
-    post : function(obj){
-        console.log(obj);
-        return Student.create(obj)
+    register : function(obj){
+        return usuarios.create(obj)
                 .then(elem => {
                     return elem;
                 })
+                .catch( err => {
+                    throw err;
+                });
+    },
+    getPass : function(userName){
+        return usuarios.findOne({usr : userName})
+                .then(user => {
+                    return user.pass;
+                })
                 .catch(err => {
                     throw err;
                 });
     },
-    getId : function(obj){
-        return Student.find({id : obj.id})
-            .then(list => {
-                return list;
-            })
-            .catch(err => {
-                console.log(err);
-                throw err;
-            });
+    getID : function(userName){
+        return usuarios.findOne({usr : userName})
+                .then(user => {
+                    return user._id;
+                })
+                .catch(err => {
+                    throw err;
+                });
+    },
+}
 
+
+let contest = {
+    addProblem : function(contestId, userId, pName, dificult, tag){
+        let obj = {
+            "id" : contestId,
+            "user" : userId,
+            "problemName" : pName,
+            "dificulty" : dificult,
+            "tag" : tag
+        }
+        console.log(obj);
+        return contests.create(obj)
+                .then(elem => {
+                    return elem;
+                })
+                .catch( err => {
+                    throw err;
+                });
     }
 }
 
-module.exports = { studentList };
+
+module.exports = { user, contest };

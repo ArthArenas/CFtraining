@@ -2,7 +2,10 @@
 function setLog(){
     isLogged = localStorage.getItem("logged") == 'true' ? true : false;
     if(!isLogged){
-        $("#logbtn").val("Log In");
+        $("#logbtn").html("Log In");
+        $("#compare").prop("disabled", true);
+        $("#stats").prop("disabled", true);
+        $("#gym").prop("disabled", true);
     }
 }
 
@@ -25,7 +28,6 @@ function main(){
     });
 
     $("#cf").on("click", function() {
-        isLogged = localStorage.getItem("logged") == 'true' ? true : false;
         if(isLogged){
             window.location = 'stats.html';
         }else{
@@ -34,11 +36,11 @@ function main(){
     });
 
     $("#logbtn").on("click", function() {
-        isLogged = localStorage.getItem("logged") == 'true' ? true : false;
         if(isLogged){
             localStorage.clear();
         }
         setLog();
+        window.location = 'login.html';
     });
 }
 
