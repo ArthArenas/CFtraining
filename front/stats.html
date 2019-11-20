@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            CFtraining
+        </title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./style/style.css"/>
+    </head>
+    <body>
+        
+        <!-- dont remove it, header added in .js -->
+        <header></header>
+
+        <main>
+            <section id="statsSection">
+            <div class="container">
+                <h1>Username</h1>
+                <h4>Name: Full Name</h2>
+                <h4>University: ITESM Campus Monterrey</h2>
+                <h4>Country: Mexico</h2>
+                <h4>Contest Rating: 3500 (Legendary Grandmaster)</h3>
+                <h1>Friends</h1>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>Add a friend: </label>
+                        <input type="text" class="form-control"/>
+                        <button class="btn btn-success">Add</button>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend1</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend2</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend3</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend4</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend5</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend6</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend7</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input"/>
+                        <label>Friend8</label>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+                <h1>Stats</h1>
+                <div id="chart_div"></div>
+                <script src="./js/stats_charts.js"></script>
+            </div>
+            </section>
+       </main>
+        <script
+          src="https://code.jquery.com/jquery-3.4.1.js"
+          integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+          crossorigin="anonymous">
+        </script>
+        <script src="./js/index.js"></script>
+        <script src="./js/stats.js"></script>
+    </body>
+</html>

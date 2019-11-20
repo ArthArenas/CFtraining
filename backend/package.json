@@ -1,0 +1,35 @@
+{
+  "name": "cftraining",
+  "version": "1.0.0",
+  "description": "cf training, statistics",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthArenas/CFtraining.git"
+  },
+  "keywords": [
+    "codeforces",
+    "training",
+    "data",
+    "visualization"
+  ],
+  "author": "arturo arenas, samuel pacheco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArthArenas/CFtraining/issues"
+  },
+  "homepage": "https://github.com/ArthArenas/CFtraining#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "cat-me": "^1.0.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.11",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4"
+  }
+}
