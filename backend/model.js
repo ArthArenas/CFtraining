@@ -9,9 +9,33 @@ let usrSchema = mongoose.Schema({
 });
 
 
+let contestSchema = mongoose.Schema({
+    id : {
+        type : String,
+        required : true
+    },
+    user : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'usrSchema',
+        required : true
+    },
+    problemName : {
+        type: String,
+        required : true
+    },
+    dificulty : {
+        type : Number,
+        required : true
+    },
+    tag : {
+        type: [String],
+        required : true
+    }
 
+});
 
 let usuarios = mongoose.model( 'user', usrSchema);
+let contests = mongoose.model( 'contests', contestSchema);
 
 
 
@@ -42,42 +66,38 @@ let user = {
                 .catch(err => {
                     throw err;
                 });
-    }
-}
-
-
-let studentList = {
-    get : function(){
-        return Student.find()
-                .then(list => {
-                    return list;
+    },
+    getID : function(userName){
+        return usuarios.findOne({usr : userName})
+                .then(user => {
+                    return user._id;
                 })
                 .catch(err => {
-                    console.log(err);
                     throw err;
                 });
     },
-    post : function(obj){
+}
+
+
+let contest = {
+    addProblem : function(contestId, userId, pName, dificult, tag){
+        let obj = {
+            "id" : contestId,
+            "user" : userId,
+            "problemName" : pName,
+            "dificulty" : dificult,
+            "tag" : tag
+        }
         console.log(obj);
-        return Student.create(obj)
+        return contests.create(obj)
                 .then(elem => {
                     return elem;
                 })
-                .catch(err => {
+                .catch( err => {
                     throw err;
                 });
-    },
-    getId : function(obj){
-        return Student.find({id : obj.id})
-            .then(list => {
-                return list;
-            })
-            .catch(err => {
-                console.log(err);
-                throw err;
-            });
-
     }
 }
 
-module.exports = { user };
+
+module.exports = { user, contest };
