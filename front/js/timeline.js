@@ -1,6 +1,3 @@
-google.charts.load('current', {'packages':['line', 'corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
 function queryRatings() {
     return fetch("../fake_json/ratings.json")
     .then(res => res.json())

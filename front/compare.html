@@ -9,6 +9,17 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="./js/index.js"></script>
+        <script src="./js/constants.js"></script>
+        <script src="./js/compare_chart.js"></script>
+        <script>
+            google.charts.load('current', {'packages':['corechart', 'line']});
+            google.setOnLoadCallback(function(){
+                $.getScript("./js/compare.js", () => {
+                    main();
+                })
+            })
+        </script>
         <link rel="stylesheet" type="text/css" href="./style/style.css"/>
     </head>
     <body>
@@ -17,7 +28,7 @@
 
         <main>
             <section id="comparatorSection">
-
+                <div id="timeline_div"></div>
             </section>
         </main>
         <script
@@ -25,7 +36,5 @@
           integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
           crossorigin="anonymous">
         </script>
-        <script src="./js/index.js"></script>
-        <script src="./js/compare.js"></script>
     </body>
 </html>

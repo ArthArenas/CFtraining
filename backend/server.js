@@ -83,15 +83,32 @@ function getProblem(tags, tag, lb, up, size, callBack, cid, uid){
     });
 }
 
+function getRatings(people, idx, ans){
+    return new Promise((resolve, reject) => {
+        if(idx == people.length){
+            resolve(ans);
+        }
+        else{
+            if(idx%5 == 4){
+                let wait = new Date(new Date().getTime() + 1 * 1000);
+                while(wait > new Date());
+            }
+            superagent.get("https://codeforces.com/api/user.rating?handle=" + people[idx])
+            .then(res => {
+                ans.push(JSON.parse(res.text).result);
+                getRatings(people, idx + 1, ans).then(res_res => {
+                    resolve(res_res);
+                })
+            });
+        }
+    });
+}
 
 function pushToDB(contestId, uid){
     problems.forEach(problem => {
         contest.addProblem(contestId, uid, problem.name, problem.rating, problem.tags);
     });
 }
-
-
-
 
 app.post("/createContest", jsonParser, function(req, res){
     let lb = req.body.lb;
@@ -211,6 +228,13 @@ app.get("/api/stats", function(req, res){
     .catch(err => {
         console.log(err);
     });
+})
+
+app.get("/api/compare", function(req, res){
+    var handles = req.query.handles.split(";")
+    getRatings(handles, 0, []).then(ans => {
+        res.status(200).send(ans);
+    })
 })
 
 let server;
