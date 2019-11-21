@@ -3,6 +3,7 @@ function main(){
     // logic for compare
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
+    console.log(usr);
 
     displayComparison(usr);
 }
@@ -12,7 +13,7 @@ main();
 function displayComparison(usr){
 
     $.ajax({
-        url: "http://localhost:3000/getFriends/" + usr,
+        url: "./getFriends/" + usr,
         type: "get",
         success: queryRatings,
         error: function(err) {
@@ -21,7 +22,11 @@ function displayComparison(usr){
     });
 }
 
-function queryRatings(friends){
+function queryRatings(friends2){
+    friends = [usr];
+    friends2.forEach(dude =>{
+        friends.push(dude.name);
+    });
     queryCFRatings(friends).then(res => {
         var data = prepareData(res);
         drawLineColors(friends, data);
@@ -30,7 +35,7 @@ function queryRatings(friends){
 
 function queryCFRatings(friends){
     return $.ajax({
-        url: "http://localhost:3000/api/compare?handles=" + buildHandlesQuery(friends),
+        url: "./api/compare?handles=" + buildHandlesQuery(friends),
         type: "get",
         success: null,
         error: function(err) {
@@ -72,7 +77,7 @@ function prepareData(res){
                 // as-is
                 newRow[idx] = res[idx][ptrs[idx]].newRating;
                 ptrs[idx]++;
-            }
+            } 
             else{
                 if(ptrs[idx] == res[idx].length || ptrs[idx] == 0){
                     // null - it's finished or hasn't started

@@ -49,13 +49,11 @@ form {
 .contest{
     border: 5px solid black;
     padding: 10px;
-    margin: 2px;
     border-radius: 10px;
     width: 100%;
 }
 
 .problem{
-    border-top: 2px solid blue;
     border-radius: 10px;
     padding: 10px;
 }

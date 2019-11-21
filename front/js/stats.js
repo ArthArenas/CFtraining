@@ -6,7 +6,6 @@ function main(){
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
 
-    usr = "sam28"; // we need to retrieve this from the db
 
 
     $("#addFriend").on("click", function(e){
@@ -33,7 +32,6 @@ function main(){
     });
 
     $("#borrar").on("click", function(e){
-
         friends = $(".form-check-input");
         console.log(friends);
         friends.map(amiwo2 => {
@@ -51,6 +49,7 @@ function main(){
                     data : JSON.stringify( obj ),
                     success : function(res){
                         console.log("done");
+                        window.location = "./stats.html";
                     },
                     error : function(res){
                         console.log(res.status);
@@ -60,8 +59,6 @@ function main(){
 
             }
         });
-        
-
     });
 
     displayInfo(usr);
@@ -72,13 +69,13 @@ function main(){
 function displayInfo(usr){
     // get info from codeforces
     queryFriends(usr).then(result => {
-        appendInfo(result[0]);  
+        appendInfo(result.result[0]);  
     })
 }
 
 function queryFriends(usr){
     return $.ajax({
-        url: "https://codeforces.com/api/user.info/handle=" + usr,
+        url: "https://codeforces.com/api/user.info?handles=" + usr,
         type: "get",
         success: null,
         error: function(err) {

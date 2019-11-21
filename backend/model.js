@@ -10,6 +10,18 @@ let usrSchema = mongoose.Schema({
 
 
 let contestSchema = mongoose.Schema({
+    name: {
+        type : String,
+        required : true
+    },
+    contestId : {
+        type : String,
+        required : true
+    },
+    index : {
+        type : String,
+        required : true
+    },
     id : {
         type : String,
         required : true
@@ -155,13 +167,16 @@ let contest = {
                     throw err;
                 });
     },
-    addProblem : function(contestId, userId, pName, dificult, tag){
+    addProblem : function(contestId, userId, pName, dificult, tag, cName, cId, indice){
         let obj = {
             "id" : contestId,
             "user" : userId,
             "problemName" : pName,
             "dificulty" : dificult,
-            "tag" : tag
+            "tag" : tag,
+            "name" : cName,
+            "contestId" : cId,
+            "index" : indice
         };
         console.log(obj);
         return contests.create(obj)

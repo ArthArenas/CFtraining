@@ -59,7 +59,7 @@ function shuffle(array) {
 
 
 
-function getProblem(tags, tag, lb, up, size, callBack, cid, uid){
+function getProblem(tags, tag, lb, up, size, callBack, cid, uid, contestName){
     superagent.get("https://codeforces.com/api/problemset.problems")
     .query({tags : tag})
     .then(res => {
@@ -78,9 +78,9 @@ function getProblem(tags, tag, lb, up, size, callBack, cid, uid){
                 while(wait > new Date());
             }
             let rn = Math.floor(Math.random() * tags.length);
-            getProblem(tags, tags[rn], lb, up, size-1, callBack, cid, uid);
+            getProblem(tags, tags[rn], lb, up, size-1, callBack, cid, uid, contestName);
         }else{
-            callBack(cid, uid);
+            callBack(cid, uid, contestName);
         }
     })
     .catch(err => {
@@ -109,9 +109,9 @@ function getRatings(people, idx, ans){
     });
 }
 
-function pushToDB(contestId, uid){
+function pushToDB(contestId, uid, contestName){
     problems.forEach(problem => {
-        contest.addProblem(contestId, uid, problem.name, problem.rating, problem.tags);
+        contest.addProblem(contestId, uid, problem.name, problem.rating, problem.tags, contestName, problem.contestId, problem.index);
     });
 }
 
@@ -270,8 +270,9 @@ app.post("/createContest", jsonParser, function(req, res){
     let tags = req.body.tags;
     let size = req.body.size;
     let usr = req.body.user;
+    let contestName = req.body.contestName
 
-    if(!lb || !ub || !tags || !size || !usr){
+    if(!lb || !ub || !tags || !size || !usr || !contestName){
         res.statusMessage = "Field missing";
         return res.status(401).json({status: 401, message : "field missing"});
     }
@@ -287,7 +288,7 @@ app.post("/createContest", jsonParser, function(req, res){
             problems = [];
 
             let rn = Math.floor(Math.random() * tags.length);
-            getProblem(tags, tags[rn], lb, ub, size-1, pushToDB, contestId, usrID);
+            getProblem(tags, tags[rn], lb, ub, size-1, pushToDB, contestId, usrID, contestName);
         })
         .catch( err => {
             return error(res);
