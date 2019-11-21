@@ -17,7 +17,7 @@ const {DATABASE_URL, PORT} = require('./config.js');
 let jsonParser = bodyParser.json();
 
 let app = express();
-app.use(express.static('./../front'));
+app.use(express.static('./front'));
 app.use(morgan('combined'));
 
 app.use(function (req, res, next) {
