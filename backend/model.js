@@ -34,9 +34,62 @@ let contestSchema = mongoose.Schema({
 
 });
 
+
+
+let friendSchema = mongoose.Schema({
+    usr : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'usrSchema',
+        required : true
+    },
+    name : {
+        type : String,
+        required : true
+    }
+
+});
+
+
 let usuarios = mongoose.model( 'user', usrSchema);
 let contests = mongoose.model( 'contests', contestSchema);
+let friends = mongoose.model( 'friends', friendSchema);
 
+
+let amigos = {
+    existFriend : function ( nombre , id) {
+        console.log(nombre, id);
+        return friends.find({name : nombre, usr : id})
+                .then(amiwo => {
+                    return amiwo.length > 0
+                })
+                .catch(err => {
+                    throw err;
+                });
+    },
+    getFriends : function( id ) {
+        return friends.find({usr : id})
+                .then(amiwos =>{
+                    return amiwos;
+                })
+                .catch(err => {
+                    throw err;
+                })
+    },
+    addFriend : function( id, name) {
+            let obj  = {
+                "usr" : id,
+                "name" : name
+            };
+            return friends.create(obj)
+                .then(amiwo => {
+                    return amiwo;
+                })
+                .catch(err =>{
+                    throw err;
+                });
+    }
+
+}
 
 
 let user = {
@@ -100,4 +153,4 @@ let contest = {
 }
 
 
-module.exports = { user, contest };
+module.exports = { user, contest, amigos };

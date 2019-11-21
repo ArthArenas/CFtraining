@@ -6,7 +6,32 @@ function main(){
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
 
-    usr = "ArtArenas"; // we need to retrieve this from the db
+    usr = "danielvazqueez"; // we need to retrieve this from the db
+
+
+    $("#addFriend").on("click", function(e){
+        e.preventDefault();
+        name = $("#usr2").val(); 
+        console.log(name);
+        let obj = {
+            "userName" : usr,
+            "friendName" : name
+        };
+
+        $.ajax({
+        url : "./addFriend",
+        type : "POST",
+        contentType : 'application/json',
+        data : JSON.stringify( obj ),
+        success : function(res){
+        },
+        error : function(res){
+            console.log(res.status);
+        }
+    });
+
+
+    });
 
     displayInfo(usr);
     displayFriends(usr);
@@ -24,7 +49,7 @@ function displayInfo(usr){
         rating: 1830,
         friendOfCount: 29,
         titlePhoto: "//userpic.codeforces.com/no-title.jpg",
-        handle: "ArtArenas",
+        handle: "sam",
         avatar: "//userpic.codeforces.com/no-avatar.jpg",
         firstName: "Arturo",
         contribution: 0,
@@ -68,18 +93,22 @@ function buildName(first, last){
 }
 
 function displayFriends(usr){
-    // get friends from db
-    friends = [
-        "Friend10",
-        "Friend20",
-        "Friend30",
-        "Friend40",
-        "Friend50",
-        "Friend60",
-        "Friend70",
-        "Friend80",
-    ];
-    appendFriends(friends);
+    friends = []
+    $.ajax({
+        url : "./getFriends/" + usr,
+        type : "GET",
+        success : function(amiwos) {
+            amiwos.forEach( amiwo => {
+                console.log(amiwo.name);
+                friends.push(amiwo.name);
+            });
+           appendFriends(friends);
+        },
+        error : function(err){
+            console.log(err);
+        }
+    });
+
 }
 
 // TODO: needs functionality
@@ -90,6 +119,7 @@ function appendFriends(friends){
         var newLabel = $("<label></label>").text(friend);
         var newDiv = $("<div></div>").attr("class", "form-group");
         newDiv.append(newInput, newLabel);
+        console.log(newDiv);
         form.append(newDiv);
     });
 }
@@ -110,7 +140,7 @@ function displayStats(usr){
 
 function queryStats(usr){
     return $.ajax({
-        url: "http://localhost:3000/api/stats?handle=" + usr,
+        url: "./api/stats?handle=" + usr,
         type: "get",
         success: null,
         error: function(err) {

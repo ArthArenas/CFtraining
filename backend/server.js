@@ -6,6 +6,7 @@ let bcrypt = require("bcrypt");
 let mongoose = require('mongoose');
 let {user} = require('./model');
 let {contest} = require('./model');
+let {amigos} = require('./model');
 let uuidv4 = require('uuid/v4');
 let superagent = require('superagent');
 
@@ -54,6 +55,10 @@ function shuffle(array) {
   return array;
 }
 
+
+
+
+
 function getProblem(tags, tag, lb, up, size, callBack, cid, uid){
     superagent.get("https://codeforces.com/api/problemset.problems")
     .query({tags : tag})
@@ -91,7 +96,82 @@ function pushToDB(contestId, uid){
 }
 
 
+function existHandle(usr, id, callBack){
+    superagent.get("https://codeforces.com/api/user.info")
+    .query({handles : usr})
+    .then(res => {
+        return callBack(usr, id);
+    })
+    .catch(err =>{
+        return;
+    });
+}
 
+
+function addFriend(friendName, id){
+        amigos.addFriend(id, friendName)
+        .then( elem=>{
+            return elem;
+        })
+        .catch( err =>{
+            return err;
+        });
+}
+
+
+app.post("/addFriend", jsonParser, function(req, res){
+    let usr = req.body.userName;
+    let friendName = req.body.friendName;
+    console.log(friendName);
+    if(!usr || !friendName){
+        res.statusMessage = "Field missing";
+        return res.status(401).json({status: 401, message : "field missing"});
+    }
+    // get usr id
+    user.getID(usr)
+        .then( id =>{
+            console.log(friendName, id);
+           amigos.existFriend(friendName, id)
+                .then(val =>{
+                    if(val == false){
+                        existHandle(friendName, id, addFriend);
+                        return res.status(200).json({status: 200});
+                    }else{
+                        res.statusMessage = "Friend already exist";
+                        return res.status(401).json({status: 401, message : "friend already exist"});
+                    }
+                })
+                .catch( err => {
+                    return error(res);
+                });
+        })
+        .catch( err => {
+            return error(res);
+        });
+});
+
+
+app.get("/getFriends/:id", function(req, res){
+    let usr = req.params.id
+    if(!usr){
+        res.statusMessage = "Field missing";
+        return res.status(401).json({status: 401, message : "field missing"});
+    }
+
+    user.getID(usr)
+        .then(id => {
+            amigos.getFriends(id)
+                .then( friends =>{
+                    return res.status(200).json(friends);
+                })
+                .catch( err => {
+                    return error(res);
+                });
+        })
+        .catch(err =>{
+            return error(res);
+        });
+});
 
 app.post("/createContest", jsonParser, function(req, res){
     let lb = req.body.lb;
