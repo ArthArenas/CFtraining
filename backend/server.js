@@ -9,6 +9,8 @@ let {contest} = require('./model');
 let uuidv4 = require('uuid/v4');
 let superagent = require('superagent');
 
+let {tagCnt} = require('./utils');
+
 const {DATABASE_URL, PORT} = require('./config.js');
 
 let jsonParser = bodyParser.json();
@@ -16,6 +18,12 @@ let jsonParser = bodyParser.json();
 let app = express();
 app.use(express.static('./../front'));
 app.use(morgan('combined'));
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    next();
+});
 
 mongoose.Promise = global.Promise;
 
@@ -195,6 +203,15 @@ app.get("/api/students", function(req, res, next){
         });
 });
 
+app.get("/api/stats", function(req, res){
+    superagent.get("https://codeforces.com/api/user.status?handle=" + req.query.handle)
+    .then(ans => {
+        res.status(200).send(tagCnt(ans.body.result));
+    })
+    .catch(err => {
+        console.log(err);
+    });
+})
 
 let server;
 function runServer(port, databaseUrl){

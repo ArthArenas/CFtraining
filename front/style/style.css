@@ -22,7 +22,13 @@ form {
     font-size: 15px;
 }
 
-#statsSection {
+#charts_div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chart_div {
+    margin: 50px;
 }
 
 #gymSection {

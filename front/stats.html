@@ -9,6 +9,17 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="./js/index.js"></script>
+        <script src="./js/constants.js"></script>
+        <script src="./js/stats_charts.js"></script>
+        <script>
+            google.charts.load('current', {'packages':['corechart']});
+            google.setOnLoadCallback(function(){
+                $.getScript("./js/stats.js", () => {
+                    main();
+                })
+            })
+        </script>
         <link rel="stylesheet" type="text/css" href="./style/style.css"/>
     </head>
     <body>
@@ -32,46 +43,12 @@
                         <button class="btn btn-success">Add</button>
                     </div>
                 </form>
-                <form>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend1</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend2</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend3</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend4</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend5</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend6</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend7</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input"/>
-                        <label>Friend8</label>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-                </form>
+                <form id="friends_form"></form>
+                <div class="form-group">
+                    <button class="btn btn-danger">Delete</button>
+                </div>
                 <h1>Stats</h1>
-                <div id="chart_div"></div>
-                <script src="./js/stats_charts.js"></script>
+                <div id="charts_div"></div>
             </div>
             </section>
        </main>
@@ -80,7 +57,5 @@
           integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
           crossorigin="anonymous">
         </script>
-        <script src="./js/index.js"></script>
-        <script src="./js/stats.js"></script>
     </body>
 </html>
