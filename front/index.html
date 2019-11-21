@@ -16,7 +16,12 @@
     <body>
         <header></header>
     <script>
-        window.location = "./login.html";
+        isLogged = localStorage.getItem("logged") == 'true' ? true : false;
+        if(isLogged){
+            window.location = "./stats.html";
+        }else{
+            window.location = "./login.html";
+        }
     </script>
         <main>
         </main>
