@@ -10,7 +10,6 @@ function main(){
 
 
     $("#addFriend").on("click", function(e){
-        e.preventDefault();
         name = $("#usr2").val(); 
         console.log(name);
         let obj = {
