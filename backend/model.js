@@ -128,11 +128,20 @@ let user = {
                 .catch(err => {
                     throw err;
                 });
-    },
+    }
 }
 
 
 let contest = {
+    getProblems : function(userName){
+        return contests.find({user : userName})
+                .then(problems => {
+                    return problems;
+                })
+                .catch(err => {
+                    throw err;
+                });
+    },
     addProblem : function(contestId, userId, pName, dificult, tag){
         let obj = {
             "id" : contestId,
@@ -140,7 +149,7 @@ let contest = {
             "problemName" : pName,
             "dificulty" : dificult,
             "tag" : tag
-        }
+        };
         console.log(obj);
         return contests.create(obj)
                 .then(elem => {

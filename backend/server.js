@@ -96,6 +96,39 @@ function pushToDB(contestId, uid){
 }
 
 
+function set(myDict, key,){
+    if(!myDict.hasOwnProperty(key)){
+        myDict[key] = [];
+    }
+}
+
+app.get("/getContests/:id", function(req, res){
+    let usr = req.params.id
+
+    user.getID(usr)
+        .then( id=>{
+            contest.getProblems(id)
+                .then(problems => {
+                    //hacer bucket de los contests
+                    contests = {};
+                    problems.forEach( problem => {
+                        set(contests, problem.id);
+                        contests[problem.id].push(problem);
+                    })
+
+                    return res.status(200).json(contests);
+                })
+                .catch( err =>{
+                    return error(res);
+                });
+        })
+        .catch(err =>{
+            return error(res);
+        })
+
+});
+
+
 function existHandle(usr, id, callBack){
     superagent.get("https://codeforces.com/api/user.info")
     .query({handles : usr})
