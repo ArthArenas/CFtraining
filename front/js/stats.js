@@ -6,7 +6,7 @@ function main(){
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
 
-    usr = "danielvazqueez"; // we need to retrieve this from the db
+    usr = "sam28"; // we need to retrieve this from the db
 
 
     $("#addFriend").on("click", function(e){
@@ -28,8 +28,40 @@ function main(){
         error : function(res){
             console.log(res.status);
         }
+        });
+
+
     });
 
+    $("#borrar").on("click", function(e){
+
+        friends = $(".form-check-input");
+        console.log(friends);
+        friends.map(amiwo2 => {
+            amiwo = friends[amiwo2];
+            console.log(amiwo);
+            if(amiwo.checked){
+                let obj = {
+                    "userName" : usr,
+                    "friendName" : amiwo.name
+                };
+                $.ajax({
+                    url : "./deleteFriend",
+                    type : "DELETE",
+                    contentType : 'application/json',
+                    data : JSON.stringify( obj ),
+                    success : function(res){
+                        console.log("done");
+                    },
+                    error : function(res){
+                        console.log(res.status);
+                    }
+
+                });
+
+            }
+        });
+        
 
     });
 
@@ -115,11 +147,11 @@ function displayFriends(usr){
 function appendFriends(friends){
     var form = $("#friends_form");
     friends.forEach(friend => {
-        var newInput = $("<input/>").attr("type", "radio").attr("class", "form-check-input");
+        var newInput = $("<input/>").attr("type", "checkbox").attr("class", "form-check-input");
         var newLabel = $("<label></label>").text(friend);
         var newDiv = $("<div></div>").attr("class", "form-group");
+        newInput.attr("name", friend);
         newDiv.append(newInput, newLabel);
-        console.log(newDiv);
         form.append(newDiv);
     });
 }
