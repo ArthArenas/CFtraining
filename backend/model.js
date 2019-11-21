@@ -87,6 +87,19 @@ let amigos = {
                 .catch(err =>{
                     throw err;
                 });
+    },
+    deleteFriend : function(id, name){
+            let obj = {
+                "usr" : id,
+                "name" : name
+            };
+        return friends.deleteOne(obj)
+                .then(amiwo => {
+                        return amiwo;
+                })
+                .catch(err =>{
+                    throw err;
+                });
     }
 
 }

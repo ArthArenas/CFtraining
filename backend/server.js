@@ -152,6 +152,43 @@ function addFriend(friendName, id){
 }
 
 
+app.delete("/deleteFriend", jsonParser, function(req, res){
+    let usr = req.body.userName;
+    let friendName = req.body.friendName;
+    console.log(friendName);
+    if(!usr || !friendName){
+        res.statusMessage = "Field missing";
+        return res.status(401).json({status: 401, message : "field missing"});
+    }
+    // get usr id
+    user.getID(usr)
+        .then( id =>{
+            console.log(friendName, id);
+           amigos.existFriend(friendName, id)
+                .then(val =>{
+                    if(val == true){
+                        amigos.deleteFriend(id, friendName)
+                            .then(elem => {
+                                return res.status(200).json(elem);
+                            })
+                            .catch ( err =>{
+                                return error(res);
+                            });
+                    }else{
+                        res.statusMessage = "friend doesnt exists";
+                        return res.status(401).json({status: 401, message : "firend doesnt exists"});
+                    }
+                })
+                .catch( err => {
+                    return error(res);
+                });
+        })
+        .catch( err => {
+            return error(res);
+        });
+});
+
+
 app.post("/addFriend", jsonParser, function(req, res){
     let usr = req.body.userName;
     let friendName = req.body.friendName;
