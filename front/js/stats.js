@@ -6,7 +6,64 @@ function main(){
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
 
-    usr = "ArtArenas"; // we need to retrieve this from the db
+    usr = "sam28"; // we need to retrieve this from the db
+
+
+    $("#addFriend").on("click", function(e){
+        e.preventDefault();
+        name = $("#usr2").val(); 
+        console.log(name);
+        let obj = {
+            "userName" : usr,
+            "friendName" : name
+        };
+
+        $.ajax({
+        url : "./addFriend",
+        type : "POST",
+        contentType : 'application/json',
+        data : JSON.stringify( obj ),
+        success : function(res){
+        },
+        error : function(res){
+            console.log(res.status);
+        }
+        });
+
+
+    });
+
+    $("#borrar").on("click", function(e){
+
+        friends = $(".form-check-input");
+        console.log(friends);
+        friends.map(amiwo2 => {
+            amiwo = friends[amiwo2];
+            console.log(amiwo);
+            if(amiwo.checked){
+                let obj = {
+                    "userName" : usr,
+                    "friendName" : amiwo.name
+                };
+                $.ajax({
+                    url : "./deleteFriend",
+                    type : "DELETE",
+                    contentType : 'application/json',
+                    data : JSON.stringify( obj ),
+                    success : function(res){
+                        console.log("done");
+                    },
+                    error : function(res){
+                        console.log(res.status);
+                    }
+
+                });
+
+            }
+        });
+        
+
+    });
 
     displayInfo(usr);
     displayFriends(usr);
@@ -14,28 +71,21 @@ function main(){
 }
 
 function displayInfo(usr){
-
     // get info from codeforces
-    result = [{
-        lastName: "Arenas",
-        country: "Mexico",
-        lastOnlineTimeSeconds: 1574204985,
-        city: "Monterrey",
-        rating: 1830,
-        friendOfCount: 29,
-        titlePhoto: "//userpic.codeforces.com/no-title.jpg",
-        handle: "ArtArenas",
-        avatar: "//userpic.codeforces.com/no-avatar.jpg",
-        firstName: "Arturo",
-        contribution: 0,
-        organization: "ITESM Campus Monterrey",
-        rank: "expert",
-        maxRating: 1830,
-        registrationTimeSeconds: 1489891582,
-        maxRank: "expert"
-    }]
+    queryFriends(usr).then(result => {
+        appendInfo(result[0]);  
+    })
+}
 
-    appendInfo(result[0]);
+function queryFriends(usr){
+    return $.ajax({
+        url: "https://codeforces.com/api/user.info/handle=" + usr,
+        type: "get",
+        success: null,
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }
 
 function getRankIdx(rating){
@@ -68,27 +118,32 @@ function buildName(first, last){
 }
 
 function displayFriends(usr){
-    // get friends from db
-    friends = [
-        "Friend10",
-        "Friend20",
-        "Friend30",
-        "Friend40",
-        "Friend50",
-        "Friend60",
-        "Friend70",
-        "Friend80",
-    ];
-    appendFriends(friends);
+    friends = []
+    $.ajax({
+        url : "./getFriends/" + usr,
+        type : "GET",
+        success : function(amiwos) {
+            amiwos.forEach( amiwo => {
+                console.log(amiwo.name);
+                friends.push(amiwo.name);
+            });
+           appendFriends(friends);
+        },
+        error : function(err){
+            console.log(err);
+        }
+    });
+
 }
 
 // TODO: needs functionality
 function appendFriends(friends){
     var form = $("#friends_form");
     friends.forEach(friend => {
-        var newInput = $("<input/>").attr("type", "radio").attr("class", "form-check-input");
+        var newInput = $("<input/>").attr("type", "checkbox").attr("class", "form-check-input");
         var newLabel = $("<label></label>").text(friend);
         var newDiv = $("<div></div>").attr("class", "form-group");
+        newInput.attr("name", friend);
         newDiv.append(newInput, newLabel);
         form.append(newDiv);
     });
@@ -110,7 +165,7 @@ function displayStats(usr){
 
 function queryStats(usr){
     return $.ajax({
-        url: "http://localhost:3000/api/stats?handle=" + usr,
+        url: "./api/stats?handle=" + usr,
         type: "get",
         success: null,
         error: function(err) {

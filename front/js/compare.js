@@ -4,22 +4,21 @@ function main(){
     usr = localStorage.getItem("usr");
     $("#usr").html(usr);
 
-    usr = "ArtArenas"; // we need to retrieve this from the db
-
     displayComparison(usr);
 }
 
 main();
 
 function displayComparison(usr){
-    friends = [
-        "eidan",
-        "sam",
-        "Huvok",
-        "edytr"
-    ];
 
-    queryRatings([usr, ...friends]);
+    $.ajax({
+        url: "http://localhost:3000/getFriends/" + usr,
+        type: "get",
+        success: queryRatings,
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }
 
 function queryRatings(friends){
