@@ -1,7 +1,6 @@
 function main(){
     //logic for the gym
     $("#makeContest").on("click", function(e){
-        e.preventDefault();
         let contestName = $("#contestName").val();
         let lb = $("#lw").val();
         let ub = $("#ub").val();
